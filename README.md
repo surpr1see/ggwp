@@ -1,24 +1,8 @@
 # ggwp
 
-## Project setup
-```
-yarn install
-```
+To start program:
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. Install yarn and node.js
+2. In the folder of project: yarn install
+3. In one terminal: yarn server
+4. In second terminal: yarn serve --port 3000

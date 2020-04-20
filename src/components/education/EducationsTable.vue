@@ -3,11 +3,12 @@
         class="py-4"
     >
         <b-table
-            hover
-            :items="students"
+            hover 
             :fields="fields"
+            :items="educations"
             bordered
             class="regular-text"
+            @row-clicked="selectEducation"
         >
         </b-table>
     </div>
@@ -15,21 +16,23 @@
 
 <script>
 export default {
-    name: 'StudentsTable',
+    name: 'EducationsTable',
     props: {
-        students: Array
+        educations: Array,
+        selectEducation: Function
     },
     computed: {
         fields() {
             const fields = [];
 
-            if(this.students.length) {
-                const tempEducation = this.students[0];
+            if(this.educations.length) {
+                const tempEducation = this.educations[0];
                 const keys = Object.keys(tempEducation);
                 keys.forEach(key => {
                     if(key !== '_id' &&
                         key !== '__v' &&
-                        key !== 'education') 
+                        key !== 'year' &&
+                        key !== 'grade') 
                     {
                         fields.push({
                             key,

@@ -3,18 +3,13 @@ const router = express.Router();
 
 const { Student } = require('./../services/student.js');
 
-router.get('/students', ( req, res ) => {
+router.get('/students', async ( req, res ) => {
 
-    const students = Student.loadAll();
-
-    res.json({
-        test: 'OK'
-    });
+    const students = await Student.loadAll();
+    res.json(students);
 });
 
 router.post('/students/', ( req, res ) => {
-
-    console.log(req.body);
 
     const newStudent = new Student(
         req.body.name,
@@ -28,7 +23,8 @@ router.post('/students/', ( req, res ) => {
         req.body.isFullTime,
         req.body.isUnavailableToEmploy,
         req.body.isBusinessStarted,
-        req.body.achievements
+        req.body.achievements,
+        req.body.education
     );
     newStudent.save();
 
@@ -38,8 +34,6 @@ router.post('/students/', ( req, res ) => {
 });
 
 router.put('/students/:studentId', ( req, res ) => {
-
-    console.log(req.body);
 
     const studentId = req.params.studentId;
     const updatedStudent = new Student(
@@ -54,7 +48,8 @@ router.put('/students/:studentId', ( req, res ) => {
         req.body.isFullTime,
         req.body.isUnavailableToEmploy,
         req.body.isBusinessStarted,
-        req.body.achievements
+        req.body.achievements,
+        req.body.education
     );
     updatedStudent.updateById(studentId);
 

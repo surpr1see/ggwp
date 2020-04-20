@@ -13,7 +13,7 @@
         <b-modal
             id="form-model"
             title="Add Student"
-            @ok="localAddStudent"
+            @ok="addStudent"
         >
             <b-input
                 type="text"
@@ -21,6 +21,17 @@
                 class="mb-3"
                 v-model="name"
             ></b-input>
+
+            <label>
+                Select education:
+            </label>
+
+            <b-select
+                :options="educationsOptions"
+                v-model="education"
+                class="mb-3"
+            >
+            </b-select>
 
             <b-input
                 type="number"
@@ -33,12 +44,12 @@
                 type="text"
                 placeholder="E-mail"
                 class="mb-3"
-                v-model="facebook"
+                v-model="socialProfile"
             ></b-input>
 
             <b-input
                 type="text"
-                placeholder="position"
+                placeholder="Position"
                 class="mb-3"
                 v-model="position"
             ></b-input>
@@ -47,7 +58,7 @@
                 type="text"
                 placeholder="Company Title"
                 class="mb-3"
-                v-model="company_title"
+                v-model="companyTitle"
             >
             </b-input>
 
@@ -62,14 +73,14 @@
                 type="text"
                 placeholder="Field Of Activity"
                 class="mb-3"
-                v-model="field_of_activity"
+                v-model="activityField"
             ></b-input>
 
             <b-form-checkbox
                 value="true"
                 unchecked-value="false"
                 class="mb-3"
-                v-model="not_employed"
+                v-model="isNotEmployed"
             >
                 Not Employed
             </b-form-checkbox>
@@ -78,7 +89,7 @@
                 value="true"
                 unchecked-value="false"
                 class="mb-3"
-                v-model="full_time"
+                v-model="isFullTime"
             >
                 Full Time
             </b-form-checkbox>
@@ -87,7 +98,7 @@
                 value="true"
                 unchecked-value="false"
                 class="mb-3"
-                v-model="unavailable_to_employ"
+                v-model="isUnavailableToEmploy"
             >
                 Unavailable To Employ
             </b-form-checkbox>
@@ -96,7 +107,7 @@
                 value="true"
                 unchecked-value="false"
                 class="mb-3"
-                v-model="business_started"
+                v-model="isBusinessStarted"
             >
                 Business Started
             </b-form-checkbox>
@@ -107,58 +118,70 @@
                 class="mb-3"
                 v-model="achievements"
             ></b-input>
-
-            <b-input
-                type="text"
-                placeholder="Information Source"
-                class="mb-3"
-                v-model="information_source"
-            ></b-input>
         </b-modal>
     </div>
 </template>
 
 <script>
 
+import { StudentsModel } from './../services/models/students.js';
+
 export default {
     name: "AddStudentForm",
     props: {
-        addStudent: Function
+        educations: Array,
+        refreshStudents: Function
     },
     data() {
         return {
             name: null,
             phone: null,
-            facebook: null,
+            socialProfile: null,
             position: null,
-            company_title: null,
+            companyTitle: null,
             region: null,
-            field_of_activity: null,
-            not_employed: null,
-            full_time: false,
-            unavailable_to_employ: false,
-            business_started: false,
+            activityField: null,
+            isNotEmployed: false,
+            isFullTime: false,
+            isUnavailableToEmploy: false,
+            isBusinessStarted: false,
             achievements: null,
-            information_source: null
+            
+            education: null
+        }
+    },
+    computed: {
+        educationsOptions() {
+            return this.educations.map(education => {
+                return {
+                    text: education.educationProgramTitle,
+                    value: education._id
+                };
+            });
         }
     },
     methods: {
-        localAddStudent() {
-            this.addStudent({
+        async addStudent() {
+            const studentsModelInstance = new StudentsModel();
+
+            await studentsModelInstance.addStudent({
                 name: this.name,
                 phone: this.phone,
-                facebook: this.facebook,
+                socialProfile: this.socialProfile,
                 position: this.position,
-                company_title: this.company_title,
+                companyTitle: this.companyTitle,
                 region: this.region,
-                field_of_activity: this.field_of_activity,
-                not_employed: this.not_employed,
-                full_time: this.full_time,
-                unavailable_to_employ: this.unavailable_to_employ,
-                business_started: this.business_started,
+                activityField: this.activityField,
+                isNotEmployed: this.isNotEmployed,
+                isFullTime: this.isFullTime,
+                isUnavailableToEmploy: this.isUnavailableToEmploy,
+                isBusinessStarted: this.isBusinessStarted,
                 achievements: this.achievements,
-                information_source: this.information_source
+                
+                education: this.education
             });
+
+            this.refreshStudents();
         }
     }
 }

@@ -1,10 +1,11 @@
 const { studentModel } = require('./../models/student.js');
+const { educationModel } = require('./../models/education.js');
 const mongoose = require('mongoose');
 
 class Student {
     constructor(name, phone, socialProfile, position, 
         companyTitle, region, activityField, isNotEmployed, isFullTime,
-        isUnavailableToEmploy, isBusinessStarted, achievements) {
+        isUnavailableToEmploy, isBusinessStarted, achievements, education) {
 
         this.name = name;
         this.phone = phone;
@@ -18,10 +19,11 @@ class Student {
         this.isUnavailableToEmploy = isUnavailableToEmploy;
         this.isBusinessStarted = isBusinessStarted;
         this.achievements = achievements;
+        this.education = education;
 
     }
 
-    save() {
+    async save() {
         const studentModelInstance = new studentModel({
             name: this.name,
             phone: this.phone,
@@ -34,23 +36,24 @@ class Student {
             isFullTime: this.isFullTime,
             isUnavailableToEmploy: this.isUnavailableToEmploy,
             isBusinessStarted: this.isBusinessStarted,
-            achievements: this.achievements
+            achievements: this.achievements,
+            education: this.education
         });
-        studentModelInstance.save((error) => {
+        await studentModelInstance.save((error) => {
             console.log(`Error while saving student: ${error}`);
-        })
+        });
     }
 
-    static deleteById(studentId) {
-        studentModel.findById(mongoose.Types.ObjectId(studentId)).remove((error) => {
+    static async deleteById(studentId) {
+        await studentModel.findById(mongoose.Types.ObjectId(studentId)).remove((error) => {
             if(error) {
                 console.log(`Error while removing student: ${error}`);
             }
         })
     }
 
-    updateById(studentId) {
-        studentModel.updateOne({ _id: mongoose.Types.ObjectId(studentId) }, {
+    async updateById(studentId) {
+        await studentModel.updateOne({ _id: mongoose.Types.ObjectId(studentId) }, {
             name: this.name,
             phone: this.phone,
             socialProfile: this.socialProfile,
@@ -62,7 +65,8 @@ class Student {
             isFullTime: this.isFullTime,
             isUnavailableToEmploy: this.isUnavailableToEmploy,
             isBusinessStarted: this.isBusinessStarted,
-            achievements: this.achievements
+            achievements: this.achievements,
+            education: this.education
         }, (error, result) => {
             if(error) {
                 console.log(`Error while updating student: ${error}`);
@@ -75,7 +79,7 @@ class Student {
     }
 
     loadById(studentId) {
-        studentModel.findById({ _id: mongoose.Types.ObjectId(studentId) }, (error, student) => {
+        studentModel.findById(mongoose.Types.ObjectId(studentId), (error, student) => {
             if(error) {
                 console.log(`Error while loading student: ${error}`);
             } else {
@@ -91,21 +95,24 @@ class Student {
                 this.isUnavailableToEmploy = student.isUnavailableToEmploy;
                 this.isBusinessStarted = student.isBusinessStarted;
                 this.achievements = student.achievements;
+                this.education = education;
             }
         });
     }
 
-    static loadAll() {
-        studentModel.find({}, (error, students) => {
-            if(error) {
-                console.log(`Error while loading all students: ${error}`);
-            }
+    static async loadAll() {
+        let students = await studentModel.find({});
+        console.log("Before: " + students);
 
-            if(students) {
-                console.log(`Students: ${students}`);
-                return students;
-            }
-        })
+        for(let i = 0; i < students.length; i++) {
+            const education = await educationModel.findById(students[i].education);
+            const mutableStudent = JSON.parse(JSON.stringify(students[i]));
+            mutableStudent.educationTitle = education.educationProgramTitle;
+            students[i] = mutableStudent;
+        }
+
+        console.log("After: " + students);
+        return students;
     }
 }
 

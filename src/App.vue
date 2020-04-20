@@ -1,25 +1,65 @@
 <template>
     <div id="app">
-        <div
-            class="row h-100"
+        <b-tabs
+            class="h-100"
         >
-            <b-col
-                sm="3"
-                class="border-right h-100"
-            >
-                <AddStudentForm
-                    :addStudent="addStudent"/>
-                <StudentsFilter/>
-            </b-col>
-
-            <b-col
-                sm="9"
+            <b-tab
+                title="Educations"
                 class="h-100"
             >
-                <StudentsTable
-                    :students="students"/>
-            </b-col>
-        </div>
+                <div
+                    class="row h-100"
+                >
+                    <b-col
+                        sm="2"
+                        class="border-right h-100 pl-4"
+                    >
+                        <AddEducationForm
+                            :refreshEducations="refreshData"/>
+                        <EducationsFilter
+                            :educations="educations"
+                            :setEducations="setEducations"/>
+                    </b-col>
+
+                    <b-col
+                        sm="10"
+                        class="h-100"
+                    >
+                        <EducationsTable
+                            :educations="filteredEducations"
+                            :selectEducation="selectEducation"/>
+                    </b-col>
+                </div>
+            </b-tab>
+
+            <b-tab
+                title="Selected Education"
+            >
+                <div
+                    class="row h-100"
+                >
+                    <b-col
+                        sm="2"
+                        class="border-right h-100"
+                    >
+                        <AddStudentForm
+                            :educations="educations"
+                            :refreshStudents="refreshData"/>
+                        <StudentsFilter
+                            :students="students"
+                            :setStudents="setStudents"/>
+                    </b-col>
+
+                    <b-col
+                        sm="10"
+                        class="h-100"
+                    >
+                        <StudentsTable
+                            :students="filteredStudents"/>
+                    </b-col>
+                </div>
+            </b-tab>
+        </b-tabs>
     </div>
 </template>
 
@@ -28,52 +68,65 @@ import StudentsTable from './components/StudentsTable.vue';
 import AddStudentForm from './components/AddStudentForm.vue';
 import StudentsFilter from './components/StudentsFilter.vue';
 
+import AddEducationForm from './components/education/AddEducationForm.vue';
+import EducationsTable from './components/education/EducationsTable.vue';
+import EducationsFilter from './components/education/EducationsFilter.vue';
+
+import { EducationsModel } from './services/models/educations.js';
+import { StudentsModel } from './services/models/students.js';
+
 export default {
     name: 'App',
     components: {
         StudentsTable,
         AddStudentForm,
-        StudentsFilter
+        StudentsFilter,
+
+        AddEducationForm,
+        EducationsTable,
+        EducationsFilter
     },
     data() {
         return {
-            students: [
-                {
-                    name: "Temp Name",
-                    phone: "3800000000",
-                    facebook: "tempname@gmail.com",
-                    position: "",
-                    company_title: "",
-                    region: "",
-                    field_of_activity: "",
-                    not_employed: "",
-                    full_time: "",
-                    unavailable_to_employ: false,
-                    business_started: false,
-                    achievements: "",
-                    information_source: ""
-                },
-                {
-                    name: "Temp Name",
-                    phone: "3800000000",
-                    facebook: "tempname@gmail.com",
-                    position: "",
-                    company_title: "",
-                    region: "",
-                    field_of_activity: "",
-                    not_employed: "",
-                    full_time: "",
-                    unavailable_to_employ: false,
-                    business_started: false,
-                    achievements: "",
-                    information_source: ""
-                }
-            ]
-        };
+            students: [],
+            educations: [],
+
+            filteredEducations: [],
+            filteredStudents: [],
+
+            selectedEducation: null
+        }
+    },
+    async created() {
+        await this.refreshData();
     },
     methods: {
-        addStudent(student) {
-            this.students.push(student);
+        async refreshData() {
+            const studentsModelInstance = new StudentsModel();
+            const educationsModelInstance = new EducationsModel();
+
+            this.students = await studentsModelInstance.getAllStudents();
+            this.educations = await educationsModelInstance.getAllEducations();
+
+            this.filteredEducations = this.educations;
+            this.filteredStudents = this.students;
+        },
+        setEducations(filteredEducations) {
+            console.log(filteredEducations);
+            this.filteredEducations = filteredEducations;
+        },
+        setStudents(filteredStudents) {
+            console.log(filteredStudents);
+            this.filteredStudents = filteredStudents;
+        },
+
+        selectEducation(selectedEducation) {
+            this.filteredStudents = this.students;
+            this.selectedEducation = selectedEducation;
+            console.log(this.selectedEducation);
+            this.filteredStudents = this.filteredStudents.filter(student => {
+                return student.education === this.selectedEducation._id;
+            });
         }
     }
 }
@@ -87,5 +140,10 @@ export default {
     text-align: center;
 
     height: 100vh;
+    width: 100vw;
+}
+
+.tab-content {
+    height: 100%;
 }
 </style>

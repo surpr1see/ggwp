@@ -31,27 +31,28 @@ const studentSchema = mongoose.Schema({
     },
     isNotEmployed: {
         type: Boolean,
-        required: true,
-        default: false
+        required: true
     },
     isFullTime: {
         type: Boolean,
-        required: true,
-        default: false
+        required: true
     },
     isUnavailableToEmploy: {
         type: Boolean,
-        required: true,
-        default: false
+        required: true
     },
     isBusinessStarted: {
         type: Boolean,
-        required: true,
-        default: false
+        required: true
     },
     achievements: {
         type: String,
         required: false
+    },
+
+    education: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 });
 

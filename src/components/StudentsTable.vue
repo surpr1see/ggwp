@@ -8,6 +8,7 @@
             :fields="fields"
             bordered
             class="regular-text"
+            @row-clicked="selectStudent"
         >
         </b-table>
     </div>
@@ -17,7 +18,8 @@
 export default {
     name: 'StudentsTable',
     props: {
-        students: Array
+        students: Array,
+        selectStudent: Function
     },
     computed: {
         fields() {

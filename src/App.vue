@@ -16,6 +16,9 @@
                     >
                         <AddEducationForm
                             :refreshEducations="refreshData"/>
+                        <EditEducationForm
+                            :refreshEducations="refreshData"
+                            :selectedEducation="selectedEducation"/>
                         <EducationsFilter
                             :educations="educations"
                             :setEducations="setEducations"/>
@@ -45,6 +48,10 @@
                         <AddStudentForm
                             :educations="educations"
                             :refreshStudents="refreshData"/>
+                        <EditStudentForm
+                            :educations="educations"
+                            :refreshStudents="refreshData"
+                            :selectedStudent="selectedStudent"/>
                         <StudentsFilter
                             :students="students"
                             :setStudents="setStudents"/>
@@ -55,7 +62,8 @@
                         class="h-100"
                     >
                         <StudentsTable
-                            :students="filteredStudents"/>
+                            :students="filteredStudents"
+                            :selectStudent="selectStudent"/>
                     </b-col>
                 </div>
             </b-tab>
@@ -66,9 +74,11 @@
 <script>
 import StudentsTable from './components/StudentsTable.vue';
 import AddStudentForm from './components/AddStudentForm.vue';
+import EditStudentForm from './components/EditStudentForm.vue';
 import StudentsFilter from './components/StudentsFilter.vue';
 
 import AddEducationForm from './components/education/AddEducationForm.vue';
+import EditEducationForm from './components/education/EditEducationForm.vue';
 import EducationsTable from './components/education/EducationsTable.vue';
 import EducationsFilter from './components/education/EducationsFilter.vue';
 
@@ -80,9 +90,11 @@ export default {
     components: {
         StudentsTable,
         AddStudentForm,
+        EditStudentForm,
         StudentsFilter,
 
         AddEducationForm,
+        EditEducationForm,
         EducationsTable,
         EducationsFilter
     },
@@ -94,7 +106,8 @@ export default {
             filteredEducations: [],
             filteredStudents: [],
 
-            selectedEducation: null
+            selectedEducation: {},
+            selectedStudent: {}
         }
     },
     async created() {
@@ -127,12 +140,20 @@ export default {
             this.filteredStudents = this.filteredStudents.filter(student => {
                 return student.education === this.selectedEducation._id;
             });
+        },
+        selectStudent(selectedStudent) {
+            this.selectedStudent = selectedStudent;
         }
     }
 }
 </script>
 
 <style>
+html,body
+{   
+    overflow-x: hidden; 
+}
+
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -140,7 +161,6 @@ export default {
     text-align: center;
 
     height: 100vh;
-    width: 100vw;
 }
 
 .tab-content {

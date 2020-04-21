@@ -3,17 +3,17 @@
         class="container-fluid"
     >
         <b-button
-            v-b-modal.edit-education-form-model
+            v-b-modal.education-form-model
             variant="primary"
             class="mt-4"
         >
-            + Add Education
+            Edit Selected Education
         </b-button>
 
         <b-modal
-            id="edit-education-form-model"
+            id="education-form-model"
             title="Add Education"
-            @ok="addEducation"
+            @ok="editEducation"
         >
             <b-input
                 type="text"
@@ -107,23 +107,25 @@ import { YearsModel } from './../../services/models/years.js';
 import { GradesModel } from './../../services/models/grades.js';
 
 export default {
-    name: "AddEducationForm",
+    name: "EditEducationForm",
     props: {
-        refreshEducations: Function
+        refreshEducations: Function,
+
+        selectedEducation: Object
     },
     data() {
         return {
-            educationProgramTitle: null,
-            grade: null,
-            totalAmountOfGraduates: null,
-            amountOfGraduatesParticipated: null,
-            amountOfEmployed: null,
-            amountOfUnemployed: null,
-            amountOfEmployedInScience: null,
-            amountOfUnavailableToEmploy: null,
-            amountOfStartedBusiness: null,
-            amountOfUkraineAchievements: null,
-            year: null,
+            educationProgramTitle: this.selectedEducation.educationProgramTitle,
+            grade: this.selectedEducation.grade,
+            totalAmountOfGraduates: this.selectedEducation.totalAmountOfGraduates,
+            amountOfGraduatesParticipated: this.selectedEducation.amountOfGraduatesParticipated,
+            amountOfEmployed: this.selectedEducation.amountOfEmployed,
+            amountOfUnemployed: this.selectedEducation.amountOfUnemployed,
+            amountOfEmployedInScience: this.selectedEducation.amountOfEmployedInScience,
+            amountOfUnavailableToEmploy: this.selectedEducation.amountOfUnavailableToEmploy,
+            amountOfStartedBusiness: this.selectedEducation.amountOfStartedBusiness,
+            amountOfUkraineAchievements: this.selectedEducation.amountOfUkraineAchievements,
+            year: this.selectedEducation.year,
 
             yearOptions: [],
             gradeOptions: []
@@ -144,11 +146,26 @@ export default {
             value: year._id
         }});
     },
+    watch: {
+        selectedEducation: function(value) {
+            this.educationProgramTitle = value.educationProgramTitle,
+            this.grade = value.grade,
+            this.totalAmountOfGraduates = value.totalAmountOfGraduates,
+            this.amountOfGraduatesParticipated = value.amountOfGraduatesParticipated,
+            this.amountOfEmployed = value.amountOfEmployed,
+            this.amountOfUnemployed = value.amountOfUnemployed,
+            this.amountOfEmployedInScience = value.amountOfEmployedInScience,
+            this.amountOfUnavailableToEmploy = value.amountOfUnavailableToEmploy,
+            this.amountOfStartedBusiness = value.amountOfStartedBusiness,
+            this.amountOfUkraineAchievements = value.amountOfUkraineAchievements,
+            this.year = value.year
+        }
+    },
     methods: {
-        async addEducation() {
-            const educationsModelInstance = new EducationsModel();
+        async editEducation() {
+            const educationsModelInstance = new EducationsModel(this.selectedEducation._id);
 
-            await educationsModelInstance.addEducation({
+            await educationsModelInstance.updateEducation({
                 educationProgramTitle: this.educationProgramTitle,
                 grade: this.grade,
                 totalAmountOfGraduates: this.totalAmountOfGraduates,
@@ -162,7 +179,7 @@ export default {
                 year: this.year
             });
 
-            this.refreshEducations();
+            await this.refreshEducations();
         }
     }
 }

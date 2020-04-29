@@ -104,7 +104,8 @@ export default {
     name: "EducationsFilter",
     props: {
         educations: Array,
-        setEducations: Function
+        setEducations: Function,
+        generateDocx: Function
     },
     data() {
         return {

@@ -65,10 +65,6 @@ class Education {
         }, (error, result) => {
             if(error) {
                 console.log(`Error while updating education: ${error}`);
-            } 
-
-            if(result) {
-                console.log(`Result: ${result}`);
             }
         });
     }

@@ -71,10 +71,6 @@ class Student {
             if(error) {
                 console.log(`Error while updating student: ${error}`);
             } 
-
-            if(result) {
-                console.log(`Result: ${result}`);
-            }
         });
     }
 
@@ -102,7 +98,6 @@ class Student {
 
     static async loadAll() {
         let students = await studentModel.find({});
-        console.log("Before: " + students);
 
         for(let i = 0; i < students.length; i++) {
             const education = await educationModel.findById(students[i].education);
@@ -111,7 +106,6 @@ class Student {
             students[i] = mutableStudent;
         }
 
-        console.log("After: " + students);
         return students;
     }
 }

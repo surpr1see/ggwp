@@ -14,6 +14,13 @@
                         sm="2"
                         class="border-right h-100 pl-4"
                     >
+                        <b-button
+                            variant="primary"
+                            @click="generateDocx"
+                            class="mt-3"
+                        >
+                            Generate Docs
+                        </b-button>
                         <AddEducationForm
                             :refreshEducations="refreshData"/>
                         <EditEducationForm
@@ -54,7 +61,8 @@
                             :selectedStudent="selectedStudent"/>
                         <StudentsFilter
                             :students="students"
-                            :setStudents="setStudents"/>
+                            :setStudents="setStudents"
+                            :generateDocx="generateDocx"/>
                     </b-col>
 
                     <b-col
@@ -84,6 +92,8 @@ import EducationsFilter from './components/education/EducationsFilter.vue';
 
 import { EducationsModel } from './services/models/educations.js';
 import { StudentsModel } from './services/models/students.js';
+import { DocxModel } from './services/models/docx.js';
+import { DownloadModel } from './services/models/download.js';
 
 export default {
     name: 'App',
@@ -143,6 +153,37 @@ export default {
         },
         selectStudent(selectedStudent) {
             this.selectedStudent = selectedStudent;
+        },
+
+        async generateDocx() {
+
+            const educationsToPrint = this.filteredEducations.map(education => {
+                const educationCopy = Object.assign({}, education);
+                delete educationCopy._id;
+                delete educationCopy.__v;
+                delete educationCopy.year;
+                delete educationCopy.grade;
+
+                return educationCopy;
+            });
+
+            console.log(this.filteredStudents);
+
+            const studentsToPrint = this.filteredStudents.map(student => {
+                const studentCopy = Object.assign({}, student);
+                delete studentCopy._id;
+                delete studentCopy.__v;
+                delete studentCopy.education;
+
+                return studentCopy;
+            });
+
+            console.log(educationsToPrint);
+            const docxModelInstance = new DocxModel();
+            await docxModelInstance.generateDocx(educationsToPrint, studentsToPrint);
+
+            const downloadModelInstance = new DownloadModel();
+            await downloadModelInstance.downloadDocx();
         }
     }
 }

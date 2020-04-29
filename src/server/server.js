@@ -28,11 +28,13 @@ const studentRouter = require('./routes/students.js');
 const educationRouter = require('./routes/educations.js');
 const yearRouter = require('./routes/years.js');
 const gradeRouter = require('./routes/grades.js');
+const docxRouter = require('./routes/docx.js');
 
 app.use(studentRouter);
 app.use(educationRouter);
 app.use(yearRouter);
 app.use(gradeRouter);
+app.use(docxRouter);
 
 db.on('error', () => {
     console.error.bind(console, 'MongoDB connection error: ');

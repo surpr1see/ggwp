@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { Education } = require('./../services/education.js');
+const { Student } = require('./../services/student.js');
 
 router.get('/educations', async ( req, res ) => {
 
@@ -61,9 +62,16 @@ router.put('/educations/:educationId', ( req, res ) => {
     });
 });
 
-router.delete('/educations/:educationId', (req, res) => {
+router.delete('/educations/:educationId', async (req, res) => {
+
+    const studentsToDelete = await Student.loadAllByEducation(req.params.educationId);
+    console.log(studentsToDelete);
+    studentsToDelete.map(async (student) => {
+        await Student.deleteById(student._id);
+    });
+
     const educationId = req.params.educationId;
-    Student.deleteById(educationId);
+    await Education.deleteById(educationId);
 
     res.json({
         status: 'Education was deleted'

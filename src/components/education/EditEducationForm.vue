@@ -6,6 +6,7 @@
             v-b-modal.education-form-model
             variant="primary"
             class="mt-4"
+            :disabled="!!!selectedEducation._id"
         >
             Edit Selected Education
         </b-button>

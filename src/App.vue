@@ -21,11 +21,26 @@
                         >
                             Generate Docs
                         </b-button>
+
                         <AddEducationForm
                             :refreshEducations="refreshData"/>
-                        <EditEducationForm
-                            :refreshEducations="refreshData"
-                            :selectedEducation="selectedEducation"/>
+
+                        <b-row>
+                            <EditEducationForm
+                                :refreshEducations="refreshData"
+                                :selectedEducation="selectedEducation"
+                                class="col"/>
+
+                            <b-button
+                                variant="primary"
+                                @click="deleteSelectedEducation"
+                                class="col mt-4 mr-2"
+                                :disabled="!!!selectedEducation._id"
+                            >
+                                Delete Selected Education
+                            </b-button>
+                        </b-row>
+
                         <EducationsFilter
                             :educations="educations"
                             :setEducations="setEducations"/>
@@ -52,13 +67,35 @@
                         sm="2"
                         class="border-right h-100"
                     >
+                        <b-button
+                            variant="primary"
+                            @click="generateDocx"
+                            class="mt-3"
+                        >
+                            Generate Docs
+                        </b-button>
+
                         <AddStudentForm
                             :educations="educations"
                             :refreshStudents="refreshData"/>
-                        <EditStudentForm
-                            :educations="educations"
-                            :refreshStudents="refreshData"
-                            :selectedStudent="selectedStudent"/>
+
+                        <b-row>
+                            <EditStudentForm
+                                :educations="educations"
+                                :refreshStudents="refreshData"
+                                :selectedStudent="selectedStudent"
+                                class="col"/>
+
+                            <b-button
+                                variant="primary"
+                                :disabled="!!!selectedStudent._id"
+                                @click="deleteSelectedStudent"
+                                class="col mt-4 mr-2"
+                            >
+                                Delete Selected Student
+                            </b-button>
+                        </b-row>
+                        
                         <StudentsFilter
                             :students="students"
                             :setStudents="setStudents"
@@ -184,12 +221,29 @@ export default {
 
             const downloadModelInstance = new DownloadModel();
             await downloadModelInstance.downloadDocx();
+        },
+
+        async deleteSelectedEducation() {
+            const educationsModelInstance = new EducationsModel(this.selectedEducation._id);
+
+            await educationsModelInstance.deleteEducation();
+            await this.refreshData();
+        },
+        async deleteSelectedStudent() {
+            const studentsModelInstance = new StudentsModel(this.selectedStudent._id);
+
+            await studentsModelInstance.deleteEducation();
+            await this.refreshData();
         }
     }
 }
 </script>
 
 <style>
+html {
+    font-size: 14px;
+}
+
 html,body
 {   
     overflow-x: hidden; 

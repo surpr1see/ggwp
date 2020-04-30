@@ -108,6 +108,11 @@ class Student {
 
         return students;
     }
+
+    static async loadAllByEducation(educationId) {
+        let students = await studentModel.find({education: mongoose.Types.ObjectId(educationId)});
+        return students;
+    }
 }
 
 module.exports = {

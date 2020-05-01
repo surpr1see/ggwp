@@ -8,7 +8,7 @@
             class="mt-4"
             :disabled="!!!selectedEducation._id"
         >
-            Edit Selected Education
+            Редактировать выбранный выпуск
         </b-button>
 
         <b-modal

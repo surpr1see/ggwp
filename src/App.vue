@@ -4,7 +4,7 @@
             class="h-100"
         >
             <b-tab
-                title="Educations"
+                title="Выпуски"
                 class="h-100"
             >
                 <div
@@ -14,12 +14,18 @@
                         sm="2"
                         class="border-right h-100 pl-4"
                     >
+                        <b-alert
+                            v-if="selectedEducation._id"
+                            show
+                        >
+                            Выбранный выпуск: {{ selectedEducation.educationProgramTitle }}
+                        </b-alert>
                         <b-button
                             variant="primary"
                             @click="generateDocx"
                             class="mt-3"
                         >
-                            Generate Docs
+                            Скачать отчеты
                         </b-button>
 
                         <AddEducationForm
@@ -32,12 +38,12 @@
                                 class="col"/>
 
                             <b-button
-                                variant="primary"
+                                variant="danger"
                                 @click="deleteSelectedEducation"
                                 class="col mt-4 mr-2"
                                 :disabled="!!!selectedEducation._id"
                             >
-                                Delete Selected Education
+                                Удалить выбранный выпуск
                             </b-button>
                         </b-row>
 
@@ -58,7 +64,7 @@
             </b-tab>
 
             <b-tab
-                title="Selected Education"
+                title="Студенты выбранного выпуска"
             >
                 <div
                     class="row h-100"
@@ -67,12 +73,19 @@
                         sm="2"
                         class="border-right h-100"
                     >
+                        <b-alert
+                            v-if="selectedStudent._id"
+                            show
+                        >
+                            Выбранный студент: {{ selectedStudent.name }}
+                        </b-alert>
+
                         <b-button
                             variant="primary"
                             @click="generateDocx"
                             class="mt-3"
                         >
-                            Generate Docs
+                            Скачать отчеты
                         </b-button>
 
                         <AddStudentForm
@@ -87,12 +100,12 @@
                                 class="col"/>
 
                             <b-button
-                                variant="primary"
+                                variant="danger"
                                 :disabled="!!!selectedStudent._id"
                                 @click="deleteSelectedStudent"
                                 class="col mt-4 mr-2"
                             >
-                                Delete Selected Student
+                                Удалить выбранного студента
                             </b-button>
                         </b-row>
                         

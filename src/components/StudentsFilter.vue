@@ -2,62 +2,83 @@
     <div
         class="mt-4 mb-4 pl-2"
     >
-        <h5>Filters:</h5>
+        <h5>Фильтрация студентов:</h5>
         <div
             class="d-flex flex-column"
         >
+            <label>
+                По ФИО:
+            </label>
             <b-input
                 type="text"
-                placeholder="Enter full name"
+                placeholder="Введите ФИО"
                 v-model="name"
                 class="mb-3"
                 @input="filter"
             ></b-input>
 
+            <label>
+                По номеру телефона:
+            </label>
             <b-input
                 type="number"
-                placeholder="Enter phone"
+                placeholder="Введите номер телефона"
                 v-model="phone"
                 class="mb-3"
                 @input="filter"
             ></b-input>
 
+            <label>
+                По e-mail:
+            </label>
             <b-input
                 type="text"
-                placeholder="E-mail"
+                placeholder="Введите E-mail"
                 v-model="socialProfile"
                 class="mb-3"
                 @input="filter"
             ></b-input>
 
+            <label>
+                По занимаемой должности:
+            </label>
             <b-input
                 type="text"
-                placeholder="Position"
+                placeholder="Введите название должности"
                 v-model="position"
                 class="mb-3"
                 @input="filter"
             ></b-input>
 
+            <label>
+                По названию компании:
+            </label>
             <b-input
                 type="text"
-                placeholder="Company Title"
+                placeholder="Введите название компании"
                 v-model="companyTitle"
                 class="mb-3"
                 @input="filter"
             >
             </b-input>
 
+            <label>
+                По региону проживания:
+            </label>
             <b-input
                 type="text"
-                placeholder="Region"
+                placeholder="Введите регион"
                 v-model="region"
                 class="mb-3"
                 @input="filter"
             ></b-input>
 
+            <label>
+                По сфере деятельности:
+            </label>
             <b-input
                 type="text"
-                placeholder="Field Of Activity"
+                placeholder="Введите сферу деятельности"
                 v-model="activityField"
                 class="mb-3"
                 @input="filter"
@@ -65,47 +86,50 @@
 
             <b-form-checkbox
                 value="true"
-                unchecked-value="false"
+                unchecked-value=null
                 class="d-flex align-items-center justify-content-center mb-3"
                 v-model="isNotEmployed"
                 @input="filter"
             >
-                Not Employed
+                Без работы
             </b-form-checkbox>
 
             <b-form-checkbox
                 value="true"
-                unchecked-value="false"
+                unchecked-value=null
                 class="d-flex align-items-center justify-content-center mb-3"
                 v-model="isFullTime"
                 @input="filter"
             >
-                Full Time
+                Полная занятость
             </b-form-checkbox>
 
             <b-form-checkbox
                 value="true"
-                unchecked-value="false"
+                unchecked-value=null
                 class="d-flex align-items-center justify-content-center mb-3"
                 v-model="isUnavailableToEmploy"
                 @input="filter"
             >
-                Unavailable To Employ
+                Недоступны к найму
             </b-form-checkbox>
 
             <b-form-checkbox
                 value="true"
-                unchecked-value="false"
+                unchecked-value=null
                 class="d-flex align-items-center justify-content-center mb-3"
                 v-model="isBusinessStarted"
                 @input="filter"
             >
-                Business Started
+                Начали свой бизнес
             </b-form-checkbox>
 
+            <label>
+                По достижениям:
+            </label>
             <b-input
                 type="text"
-                placeholder="Achievements"
+                placeholder="Введите текст достижений"
                 v-model="achievements"
                 class="mb-3"
                 @input="filter"
@@ -177,24 +201,17 @@ export default {
                 });
             }
 
-            if(this.isNotEmployed !== null) {
+
+            if((this.isNotEmployed !== null && this.isNotEmployed !== 'null') ||
+                (this.isFullTime !== null && this.isFullTime !== 'null') ||
+                (this.isBusinessStarted !== null && this.isBusinessStarted !== 'null') ||
+                (this.isUnavailableToEmploy !== null && this.isUnavailableToEmploy !== 'null')
+            ) {
                 filteredStudents = filteredStudents.filter(student => {
-                    return student.isNotEmployed === this.isNotEmployed
-                });
-            }
-            if(this.isFullTime !== null) {
-                filteredStudents = filteredStudents.filter(student => {
-                    return student.isFullTime === this.isFullTime
-                });
-            }
-            if(this.isBusinessStarted !== null) {
-                filteredStudents = filteredStudents.filter(student => {
-                    return student.isBusinessStarted === this.isBusinessStarted
-                });
-            }
-            if(this.isUnavailableToEmploy !== null) {
-                filteredStudents = filteredStudents.filter(student => {
-                    return student.isUnavailableToEmploy === this.isUnavailableToEmploy
+                    return student.isNotEmployed.toString() == this.isNotEmployed ||
+                        student.isFullTime.toString() == this.isFullTime ||
+                        student.isBusinessStarted.toString() == this.isBusinessStarted ||
+                        student.isUnavailableToEmploy.toString() === this.isUnavailableToEmploy
                 });
             }
 

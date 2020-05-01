@@ -7,94 +7,129 @@
             variant="primary"
             class="mt-4"
         >
-            + Add Education
+            + Добавить выпуск
         </b-button>
 
         <b-modal
             id="edit-education-form-model"
-            title="Add Education"
+            title="Добавить выпуск"
             @ok="addEducation"
         >
+            <label>
+                Название программы обучения:
+            </label>
             <b-input
                 type="text"
-                placeholder="Program Title"
+                placeholder="Введите название программы обучения"
                 class="mb-3"
                 v-model="educationProgramTitle"
+                :state="isEducationsTitleEntered"
             ></b-input>
 
+            <label>
+                Степень:
+            </label>
             <b-select
                 :options="gradeOptions"
-                placeholder="Education Grade"
                 class="mb-3"
                 v-model="grade"
+                :state="isGradeSelected"
             ></b-select>
 
+            <label>
+                Общее количество выпускников:
+            </label>
             <b-input
                 type="text"
-                placeholder="Amount Of Graduates"
+                placeholder="Введите общее количество выпускников"
                 class="mb-3"
                 v-model="totalAmountOfGraduates"
             ></b-input>
 
+            <label>
+                Количество выпускников, принявших участие в опросе:
+            </label>
             <b-input
                 type="text"
-                placeholder="Graduates Participated"
+                placeholder="Введите количество участовавших в опросе выпускников"
                 class="mb-3"
                 v-model="amountOfGraduatesParticipated"
             >
             </b-input>
 
+            <label>
+                Количество работающих:
+            </label>
             <b-input
                 type="text"
-                placeholder="Amount Of Employed"
+                placeholder="Введите количество работающих"
                 class="mb-3"
                 v-model="amountOfEmployed"
             ></b-input>
 
+            <label>
+                Количество неработающих:
+            </label>
             <b-input
                 type="text"
-                placeholder="Amount Of Unemployed"
+                placeholder="Введите количество неработающих"
                 class="mb-3"
                 v-model="amountOfUnemployed"
             ></b-input>
 
+            <label>
+                Заняты наукой:
+            </label>
             <b-input
                 type="text"
-                placeholder="Employed In Science"
+                placeholder="Введите количество занятых наукой"
                 class="mb-3"
                 v-model="amountOfEmployedInScience"
             >
             </b-input>
 
+            <label>
+                Недоступны к найму:
+            </label>
             <b-input
                 type="text"
-                placeholder="Unavailable To Employ"
+                placeholder="Введите количество недоступных к найму"
                 class="mb-3"
                 v-model="amountOfUnavailableToEmploy"
             >
             </b-input>
 
+            <label>
+                Начали свой бизнес:
+            </label>
             <b-input
                 type="text"
-                placeholder="Started Business"
+                placeholder="Введите количество начавших свой бизнес"
                 class="mb-3"
                 v-model="amountOfStartedBusiness"
             >
             </b-input>
 
+            <label>
+                Количество студентов с всеукраинскими достижениями:
+            </label>
             <b-input
                 type="text"
-                placeholder="Amount Of Ukraine Achievements"
+                placeholder="Введите их количество"
                 class="mb-3"
                 v-model="amountOfUkraineAchievements"
             >
             </b-input>
 
+            <label>
+                Год выпуска:
+            </label>
             <b-select
                 :options="yearOptions"
                 placeholder="Education Year"
                 class="mb-3"
                 v-model="year"
+                :state="isYearSelected"
             ></b-select>
         </b-modal>
     </div>
@@ -129,6 +164,17 @@ export default {
             gradeOptions: []
         }
     },
+    computed: {
+        isEducationsTitleEntered() {
+            return !!this.educationProgramTitle;
+        },
+        isGradeSelected() {
+            return !!this.grade;
+        },
+        isYearSelected() {
+            return !!this.year;
+        }
+    },
     async created() {
         const gradesModelInstance = new GradesModel();
         const yearsModelInstance = new YearsModel();
@@ -145,7 +191,13 @@ export default {
         }});
     },
     methods: {
-        async addEducation() {
+        async addEducation(event) {
+            if(!this.isEducationsTitleEntered || !this.isGradeSelected || !this.isYearSelected) {
+                event.preventDefault();
+                alert("Неверные данные!");
+                return;
+            }
+
             const educationsModelInstance = new EducationsModel();
 
             await educationsModelInstance.addEducation({

@@ -2,20 +2,23 @@
     <div
         class="mt-4 mb-4"
     >
-        <h5>Education Filters:</h5>
+        <h5>Фильтрация выпусков:</h5>
         <div
             class="d-flex flex-column"
         >
+            <label>
+                По названию программы обучения:
+            </label>
             <b-input
                 type="text"
-                placeholder="Enter program title"
+                placeholder="Введите название программы"
                 v-model="educationProgramTitle"
                 class="mb-3"
                 @input="filter"
             ></b-input>
 
             <label>
-                Select Education Grade:
+                По степени:
             </label>
             <b-select
                 v-model="grade"
@@ -82,9 +85,8 @@
             ></b-input> -->
 
             <label>
-                Select Education Year:
+                По году выпуска:
             </label>
-
             <b-select
                 v-model="year"
                 :options="yearOptions"

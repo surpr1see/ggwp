@@ -8,7 +8,7 @@
             class="mt-4"
             :disabled="!!!selectedStudent._id"
         >
-            Edit Selected Student
+            Редактировать выбранного студента
         </b-button>
 
         <b-modal

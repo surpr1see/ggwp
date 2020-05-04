@@ -16,63 +16,97 @@
             title="Edit Student"
             @ok="updateStudent"
         >
+            <label>
+                Полное имя:
+            </label>
             <b-input
                 type="text"
-                placeholder="Enter full name"
+                placeholder="Введите полное имя"
                 class="mb-3"
                 v-model="name"
+                :state="!!name"
             ></b-input>
 
             <label>
-                Select education:
+                Выберите образовательную программу:
             </label>
-
             <b-select
                 :options="educationsOptions"
                 v-model="education"
                 class="mb-3"
+                :state="isEducationSelected"
             >
             </b-select>
 
+            <label>
+                Мобильный телефон:
+            </label>
             <b-input
                 type="number"
-                placeholder="Enter phone"
+                placeholder="xxxxxxxxxx"
                 class="mb-3"
                 v-model="phone"
+                :state="validatePhone(phone)"
             ></b-input>
 
+            <label>
+                E-mail:
+            </label>
             <b-input
                 type="text"
-                placeholder="E-mail"
+                placeholder="Введите e-mail"
                 class="mb-3"
                 v-model="socialProfile"
+                :state="validateEmail(socialProfile)"
             ></b-input>
 
+            <label>
+                Профиль в соц. сетях:
+            </label>
             <b-input
                 type="text"
-                placeholder="Position"
+                placeholder="Введите профиль в соц. сетях"
+                class="mb-3"
+                v-model="secondSocialProfile"
+            ></b-input>
+
+            <label>
+                Занимаемая должность:
+            </label>
+            <b-input
+                type="text"
+                placeholder="Введите занимаемую должность"
                 class="mb-3"
                 v-model="position"
             ></b-input>
 
+            <label>
+                Компания:
+            </label>
             <b-input
                 type="text"
-                placeholder="Company Title"
+                placeholder="Введите название компании"
                 class="mb-3"
                 v-model="companyTitle"
             >
             </b-input>
 
+            <label>
+                Регион:
+            </label>
             <b-input
                 type="text"
-                placeholder="Region"
+                placeholder="Введите регион"
                 class="mb-3"
                 v-model="region"
             ></b-input>
 
+            <label>
+                Поле деятельности:
+            </label>
             <b-input
                 type="text"
-                placeholder="Field Of Activity"
+                placeholder="Введите поле деятельности"
                 class="mb-3"
                 v-model="activityField"
             ></b-input>
@@ -83,7 +117,7 @@
                 class="mb-3"
                 v-model="isNotEmployed"
             >
-                Not Employed
+                Не занят
             </b-form-checkbox>
 
             <b-form-checkbox
@@ -92,7 +126,7 @@
                 class="mb-3"
                 v-model="isFullTime"
             >
-                Full Time
+                Полный рабочий день
             </b-form-checkbox>
 
             <b-form-checkbox
@@ -101,7 +135,7 @@
                 class="mb-3"
                 v-model="isUnavailableToEmploy"
             >
-                Unavailable To Employ
+                Недоступен к найму
             </b-form-checkbox>
 
             <b-form-checkbox
@@ -110,14 +144,27 @@
                 class="mb-3"
                 v-model="isBusinessStarted"
             >
-                Business Started
+                Начал свой бизнес
             </b-form-checkbox>
 
+            <label>
+                Достижения:
+            </label>
             <b-input
                 type="text"
-                placeholder="Achievements"
+                placeholder="Введите полученные достижения"
                 class="mb-3"
                 v-model="achievements"
+            ></b-input>
+
+            <label>
+                Источник информации:
+            </label>
+            <b-input
+                type="text"
+                placeholder="Введите источник информации о студенте"
+                class="mb-3"
+                v-model="informationSource"
             ></b-input>
         </b-modal>
     </div>
@@ -140,6 +187,7 @@ export default {
             name: this.selectedStudent.name,
             phone: this.selectedStudent.phone,
             socialProfile: this.selectedStudent.socialProfile,
+            secondSocialProfile: this.selectedStudent.secondSocialProfile,
             position: this.selectedStudent.position,
             companyTitle: this.selectedStudent.companyTitle,
             region: this.selectedStudent.region,
@@ -149,6 +197,7 @@ export default {
             isUnavailableToEmploy: this.selectedStudent.isUnavailableToEmploy,
             isBusinessStarted: this.selectedStudent.isBusinessStarted,
             achievements: this.selectedStudent.achievements,
+            informationSource: this.selectedStudent.informationSource,
             
             education: this.selectedStudent.education
         }
@@ -158,6 +207,7 @@ export default {
             this.name = value.name,
             this.phone = value.phone,
             this.socialProfile = value.socialProfile,
+            this.secondSocialProfile = value.secondSocialProfile,
             this.position = value.position,
             this.companyTitle = value.companyTitle,
             this.region = value.region,
@@ -167,6 +217,7 @@ export default {
             this.isUnavailableToEmploy = value.isUnavailableToEmploy,
             this.isBusinessStarted = value.isBusinessStarted,
             this.achievements = value.achievements,
+            this.informationSource = value.informationSource,
             
             this.education = value.education
         }
@@ -179,6 +230,18 @@ export default {
                     value: education._id
                 };
             });
+        },
+        isEducationSelected() {
+            return !!this.education;
+        },
+        isEmailValid() {
+            return this.validateEmail(this.socialProfile);
+        },
+        isPhoneValid() {
+            return this.validatePhone(this.phone);
+        },
+        isNameValid() {
+            return !!this.name;
         }
     },
     methods: {
@@ -189,6 +252,7 @@ export default {
                 name: this.name,
                 phone: this.phone,
                 socialProfile: this.socialProfile,
+                secondSocialProfile: this.secondSocialProfile,
                 position: this.position,
                 companyTitle: this.companyTitle,
                 region: this.region,
@@ -198,11 +262,20 @@ export default {
                 isUnavailableToEmploy: this.isUnavailableToEmploy,
                 isBusinessStarted: this.isBusinessStarted,
                 achievements: this.achievements,
+                informationSource: this.informationSource,
                 
                 education: this.education
             });
 
             await this.refreshStudents();
+        },
+        validateEmail(mail) 
+        {
+            return /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(mail);
+        },
+        validatePhone(phone) 
+        {
+            return /^\d{10}$/.test(phone);
         }
     }
 }

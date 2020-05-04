@@ -15,6 +15,7 @@ router.post('/students/', ( req, res ) => {
         req.body.name,
         req.body.phone,
         req.body.socialProfile,
+        req.body.secondSocialProfile,
         req.body.position,
         req.body.companyTitle,
         req.body.region,
@@ -24,6 +25,7 @@ router.post('/students/', ( req, res ) => {
         req.body.isUnavailableToEmploy,
         req.body.isBusinessStarted,
         req.body.achievements,
+        req.body.informationSource,
         req.body.education
     );
     newStudent.save();
@@ -40,6 +42,7 @@ router.put('/students/:studentId', ( req, res ) => {
         req.body.name,
         req.body.phone,
         req.body.socialProfile,
+        req.body.secondSocialProfile,
         req.body.position,
         req.body.companyTitle,
         req.body.region,
@@ -49,6 +52,7 @@ router.put('/students/:studentId', ( req, res ) => {
         req.body.isUnavailableToEmploy,
         req.body.isBusinessStarted,
         req.body.achievements,
+        req.body.informationSource,
         req.body.education
     );
     updatedStudent.updateById(studentId);

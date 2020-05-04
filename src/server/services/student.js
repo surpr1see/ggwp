@@ -3,13 +3,14 @@ const { educationModel } = require('./../models/education.js');
 const mongoose = require('mongoose');
 
 class Student {
-    constructor(name, phone, socialProfile, position, 
+    constructor(name, phone, socialProfile, secondSocialProfile, position, 
         companyTitle, region, activityField, isNotEmployed, isFullTime,
-        isUnavailableToEmploy, isBusinessStarted, achievements, education) {
+        isUnavailableToEmploy, isBusinessStarted, achievements, informationSource, education) {
 
         this.name = name;
         this.phone = phone;
         this.socialProfile = socialProfile;
+        this.secondSocialProfile = secondSocialProfile;
         this.position = position;
         this.companyTitle = companyTitle;
         this.region = region;
@@ -19,6 +20,7 @@ class Student {
         this.isUnavailableToEmploy = isUnavailableToEmploy;
         this.isBusinessStarted = isBusinessStarted;
         this.achievements = achievements;
+        this.informationSource = informationSource;
         this.education = education;
 
     }
@@ -28,6 +30,7 @@ class Student {
             name: this.name,
             phone: this.phone,
             socialProfile: this.socialProfile,
+            secondSocialProfile: this.secondSocialProfile,
             position: this.position,
             companyTitle: this.companyTitle,
             region: this.region,
@@ -37,6 +40,7 @@ class Student {
             isUnavailableToEmploy: this.isUnavailableToEmploy,
             isBusinessStarted: this.isBusinessStarted,
             achievements: this.achievements,
+            informationSource: this.informationSource,
             education: this.education
         });
         await studentModelInstance.save((error) => {
@@ -57,6 +61,7 @@ class Student {
             name: this.name,
             phone: this.phone,
             socialProfile: this.socialProfile,
+            secondSocialProfile: this.secondSocialProfile,
             position: this.position,
             companyTitle: this.companyTitle,
             region: this.region,
@@ -66,6 +71,7 @@ class Student {
             isUnavailableToEmploy: this.isUnavailableToEmploy,
             isBusinessStarted: this.isBusinessStarted,
             achievements: this.achievements,
+            informationSource: this.informationSource,
             education: this.education
         }, (error, result) => {
             if(error) {
@@ -82,6 +88,7 @@ class Student {
                 this.name = student.name;
                 this.phone = student.phone;
                 this.socialProfile = student.socialProfile;
+                this.secondSocialProfile = student.secondSocialProfile;
                 this.position = student.position;
                 this.companyTitle = student.companyTitle;
                 this.region = student.region;
@@ -91,6 +98,7 @@ class Student {
                 this.isUnavailableToEmploy = student.isUnavailableToEmploy;
                 this.isBusinessStarted = student.isBusinessStarted;
                 this.achievements = student.achievements;
+                this.informationSource = student.informationSource,
                 this.education = education;
             }
         });

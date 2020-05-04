@@ -60,6 +60,16 @@
             ></b-input>
 
             <label>
+                Профиль в соц. сетях:
+            </label>
+            <b-input
+                type="text"
+                placeholder="Введите профиль в соц. сетях"
+                class="mb-3"
+                v-model="secondSocialProfile"
+            ></b-input>
+
+            <label>
                 Занимаемая должность:
             </label>
             <b-input
@@ -145,6 +155,16 @@
                 class="mb-3"
                 v-model="achievements"
             ></b-input>
+
+            <label>
+                Источник информации:
+            </label>
+            <b-input
+                type="text"
+                placeholder="Введите источник информации о студенте"
+                class="mb-3"
+                v-model="informationSource"
+            ></b-input>
         </b-modal>
     </div>
 </template>
@@ -164,6 +184,7 @@ export default {
             name: null,
             phone: null,
             socialProfile: null,
+            secondSocialProfile: null,
             position: null,
             companyTitle: null,
             region: null,
@@ -173,6 +194,7 @@ export default {
             isUnavailableToEmploy: false,
             isBusinessStarted: false,
             achievements: null,
+            informationSource: null,
             
             education: null
         }
@@ -212,6 +234,7 @@ export default {
                 name: this.name,
                 phone: this.phone,
                 socialProfile: this.socialProfile,
+                secondSocialProfile: this.secondSocialProfile,
                 position: this.position,
                 companyTitle: this.companyTitle,
                 region: this.region,
@@ -221,6 +244,7 @@ export default {
                 isUnavailableToEmploy: this.isUnavailableToEmploy,
                 isBusinessStarted: this.isBusinessStarted,
                 achievements: this.achievements,
+                informationSource: this.informationSource,
                 
                 education: this.education
             });

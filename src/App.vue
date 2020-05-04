@@ -40,7 +40,7 @@
 
                             <b-button
                                 variant="danger"
-                                @click="deleteSelectedEducation"
+                                v-b-modal.deleting-student-confirmation
                                 class="col mt-4 mr-2"
                                 :disabled="!!!selectedEducation._id || isLoading"
                             >
@@ -108,7 +108,7 @@
                             <b-button
                                 variant="danger"
                                 :disabled="!!!selectedStudent._id"
-                                @click="deleteSelectedStudent"
+                                v-b-modal.deleting-student-confirmation
                                 class="col mt-4 mr-2"
                             >
                                 <span
@@ -140,9 +140,31 @@
                             :students="filteredStudents"
                             :selectStudent="selectStudent"/>
                     </b-col>
+
+                    <b-modal
+                        id="deleting-student-confirmation"
+                        title="Удаление студента"
+                        @ok="deleteSelectedStudent"
+                    >
+                        Вы действительно хотите удалить этого студента?
+                    </b-modal>
+
+                    <b-modal
+                        id="deleting-education-confirmation"
+                        title="Удаление выпуска"
+                        @ok="deleteSelectedEducation"
+                    >
+                        Вы действительно хотите удалить этот выпуск?
+                    </b-modal>
                 </div>
             </b-tab>
         </b-tabs>
+
+        <b-modal
+            id="confirmation-modal"
+        >
+            Вы действительно хотите удалить эту запись?
+        </b-modal>
     </div>
 </template>
 

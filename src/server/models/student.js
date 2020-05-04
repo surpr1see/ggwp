@@ -13,6 +13,10 @@ const studentSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    secondSocialProfile: {
+        type: String,
+        required: false
+    },
     position: {
         type: String,
         required: false
@@ -46,6 +50,10 @@ const studentSchema = mongoose.Schema({
         required: true
     },
     achievements: {
+        type: String,
+        required: false
+    },
+    informationSource: {
         type: String,
         required: false
     },

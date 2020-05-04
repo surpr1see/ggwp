@@ -31,22 +31,80 @@ export default {
     },
     computed: {
         fields() {
-            const fields = [];
-
+            let fields = [];
             if(this.students.length) {
-                const tempEducation = this.students[0];
-                const keys = Object.keys(tempEducation);
-                keys.forEach(key => {
-                    if(key !== '_id' &&
-                        key !== '__v' &&
-                        key !== 'education') 
+                fields = [
                     {
-                        fields.push({
-                            key,
-                            sortable: true
-                        })
+                        label: 'Прізвище, ім’я, по-батькові',
+                        sortable: true,
+                        key: 'name'
+                    },
+                    {
+                        label: 'Телефон',
+                        sortable: true,
+                        key: 'phone'
+                    },
+                    {
+                        label: 'e-mail',
+                        sortable: true,
+                        key: 'socialProfile'
+                    },
+                    {
+                        label: 'Сторінка у Facebook, LinkedIn',
+                        sortable: true,
+                        key: 'secondSocialProfile'
+                    },
+                    {
+                        label: 'Посада',
+                        sortable: true,
+                        key: 'position'
+                    },
+                    {
+                        label: 'Назва підприємства (установи)',
+                        sortable: true,
+                        key: 'companyTitle'
+                    },
+                    {
+                        label: 'Регіон (область, місто)',
+                        sortable: true,
+                        key: 'region'
+                    },
+                    {
+                        label: 'Сфера діяльності',
+                        sortable: true,
+                        key: 'activityField'
+                    },
+                    {
+                        label: 'Незайняті, проте шукають роботу/ не брав участь в опитуванні',
+                        sortable: true,
+                        key: 'isNotEmployed'
+                    },
+                    {
+                        label: 'Повна зайнятість',
+                        sortable: true,
+                        key: 'isFullTime'
+                    },
+                    {
+                        label: 'Недоступність для роботи',
+                        sortable: true,
+                        key: 'isUnavailableToEmploy'
+                    },
+                    {
+                        label: 'Розпочато власний бізнес',
+                        sortable: true,
+                        key: 'isBusinessStarted'
+                    },
+                    {
+                        label: 'Відзнаки, досягнення',
+                        sortable: true,
+                        key: 'achievements'
+                    },
+                    {
+                        label: 'Джерело інформації про працевлаштування',
+                        sortable: true,
+                        key: 'informationSource'
                     }
-                });
+                ];
             }
 
             return fields;

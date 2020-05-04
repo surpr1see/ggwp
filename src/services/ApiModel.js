@@ -1,7 +1,7 @@
 class ApiModel {
-    static host = 'localhost';
-    static port = '8081';
-    static protocol = 'http://';
+    static host = process.env.GGWP_HOST ? process.env.GGWP_HOST : 'localhost';
+    static port = process.env.GGWP_PORT ? process.env.GGWP_PORT : '8081';
+    static protocol = process.env.IS_HTTPS ? 'https://' : 'http://';
 
     modelBaseUrl;
     modelRequest;

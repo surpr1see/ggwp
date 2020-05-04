@@ -1,7 +1,7 @@
 class ApiModel {
     static host = process.env.HOST ? process.env.HOST : 'localhost';
     static port = process.env.PORT ? process.env.PORT : '8081';
-    static protocol = process.env.IS_HTTPS ? 'https://' : 'http://';
+    static protocol = 'https://';
 
     modelBaseUrl;
     modelRequest;

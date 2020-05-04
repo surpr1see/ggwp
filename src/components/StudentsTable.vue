@@ -2,6 +2,14 @@
     <div
         class="py-4"
     >
+        <b-alert
+            v-if="!students.length"
+            show
+            class="mt-2"
+        >
+            Студенты для отображения отсутствуют
+        </b-alert>
+
         <b-table
             hover
             :items="students"

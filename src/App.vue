@@ -24,6 +24,7 @@
                             variant="primary"
                             @click="generateDocx"
                             class="mt-3"
+                            :disabled="isLoading"
                         >
                             Скачать отчеты
                         </b-button>
@@ -41,7 +42,7 @@
                                 variant="danger"
                                 @click="deleteSelectedEducation"
                                 class="col mt-4 mr-2"
-                                :disabled="!!!selectedEducation._id"
+                                :disabled="!!!selectedEducation._id || isLoading"
                             >
                                 Удалить выбранный выпуск
                             </b-button>
@@ -56,7 +57,11 @@
                         sm="10"
                         class="h-100"
                     >
+                        <Loading
+                            v-if="isLoading"
+                            class="mt-5"/>
                         <EducationsTable
+                            v-if="!isLoading"
                             :educations="filteredEducations"
                             :selectEducation="selectEducation"/>
                     </b-col>
@@ -84,6 +89,7 @@
                             variant="primary"
                             @click="generateDocx"
                             class="mt-3"
+                            :disabled="isLoading"
                         >
                             Скачать отчеты
                         </b-button>
@@ -105,7 +111,14 @@
                                 @click="deleteSelectedStudent"
                                 class="col mt-4 mr-2"
                             >
-                                Удалить выбранного студента
+                                <span
+                                    v-if="!isLoading"
+                                >
+                                    Удалить выбранного студента
+                                </span>
+
+                                <Loading
+                                    v-if="isLoading"/>
                             </b-button>
                         </b-row>
                         
@@ -119,7 +132,11 @@
                         sm="10"
                         class="h-100"
                     >
+                        <Loading
+                            v-if="isLoading"
+                            class="mt-5"/>
                         <StudentsTable
+                            v-if="!isLoading"
                             :students="filteredStudents"
                             :selectStudent="selectStudent"/>
                     </b-col>
@@ -130,6 +147,8 @@
 </template>
 
 <script>
+import Loading from './components/Loading.vue';
+
 import StudentsTable from './components/StudentsTable.vue';
 import AddStudentForm from './components/AddStudentForm.vue';
 import EditStudentForm from './components/EditStudentForm.vue';
@@ -148,6 +167,8 @@ import { DownloadModel } from './services/models/download.js';
 export default {
     name: 'App',
     components: {
+        Loading,
+
         StudentsTable,
         AddStudentForm,
         EditStudentForm,
@@ -167,7 +188,9 @@ export default {
             filteredStudents: [],
 
             selectedEducation: {},
-            selectedStudent: {}
+            selectedStudent: {},
+
+            isLoading: true
         }
     },
     async created() {
@@ -175,6 +198,7 @@ export default {
     },
     methods: {
         async refreshData() {
+            this.isLoading = true;
             const studentsModelInstance = new StudentsModel();
             const educationsModelInstance = new EducationsModel();
 
@@ -183,20 +207,19 @@ export default {
 
             this.filteredEducations = this.educations;
             this.filteredStudents = this.students;
+
+            this.isLoading = false;
         },
         setEducations(filteredEducations) {
-            console.log(filteredEducations);
             this.filteredEducations = filteredEducations;
         },
         setStudents(filteredStudents) {
-            console.log(filteredStudents);
             this.filteredStudents = filteredStudents;
         },
 
         selectEducation(selectedEducation) {
             this.filteredStudents = this.students;
             this.selectedEducation = selectedEducation;
-            console.log(this.selectedEducation);
             this.filteredStudents = this.filteredStudents.filter(student => {
                 return student.education === this.selectedEducation._id;
             });
@@ -206,6 +229,7 @@ export default {
         },
 
         async generateDocx() {
+            this.isLoading = true;
 
             const educationsToPrint = this.filteredEducations.map(education => {
                 const educationCopy = Object.assign({}, education);
@@ -217,8 +241,6 @@ export default {
                 return educationCopy;
             });
 
-            console.log(this.filteredStudents);
-
             const studentsToPrint = this.filteredStudents.map(student => {
                 const studentCopy = Object.assign({}, student);
                 delete studentCopy._id;
@@ -228,25 +250,30 @@ export default {
                 return studentCopy;
             });
 
-            console.log(educationsToPrint);
             const docxModelInstance = new DocxModel();
             await docxModelInstance.generateDocx(educationsToPrint, studentsToPrint);
 
             const downloadModelInstance = new DownloadModel();
             await downloadModelInstance.downloadDocx();
+
+            this.isLoading = false;
         },
 
         async deleteSelectedEducation() {
+            this.isLoading = true;
             const educationsModelInstance = new EducationsModel(this.selectedEducation._id);
 
             await educationsModelInstance.deleteEducation();
             await this.refreshData();
+            this.isLoading = false;
         },
         async deleteSelectedStudent() {
+            this.isLoading = true;
             const studentsModelInstance = new StudentsModel(this.selectedStudent._id);
 
-            await studentsModelInstance.deleteEducation();
+            await studentsModelInstance.deleteStudent();
             await this.refreshData();
+            this.isLoading = false;
         }
     }
 }

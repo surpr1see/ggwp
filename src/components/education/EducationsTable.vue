@@ -2,6 +2,14 @@
     <div
         class="py-4"
     >
+        <b-alert
+            v-if="!educations.length"
+            show
+            class="mt-2"
+        >
+            Выпуски отсутствуют в базе данных
+        </b-alert>
+
         <b-table
             hover 
             :fields="fields"

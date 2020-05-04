@@ -1,12 +1,13 @@
 class ApiModel {
-    static host = process.env.HOST ? process.env.HOST : 'localhost';
-    static port = process.env.PORT ? process.env.PORT : '5000';
+    static host = 'localhost';
+    static port = '5000';
     static protocol = 'https://';
 
     modelBaseUrl;
     modelRequest;
 
     constructor() {
+        console.log('process port: ' + process.env.PORT);
         this._buildUrl = this._buildUrl.bind(this);
         this._buildUrlWithParams = this._buildUrlWithParams.bind(this);
 

@@ -155,7 +155,7 @@ class Docx {
         });
 
         const bufferedDoc = await Packer.toBuffer(doc);
-        fs.writeFileSync(__dirname + "\\..\\public\\docs\\doc.docx", bufferedDoc);
+        fs.writeFileSync(__dirname + "/../public/docs/doc.docx", bufferedDoc);
 
         console.log(educationsToDoc);
     }
@@ -393,7 +393,7 @@ class Docx {
         });
 
         const bufferedDoc = await Packer.toBuffer(doc);
-        fs.writeFileSync(__dirname + "\\..\\public\\docs\\doc2.docx", bufferedDoc);
+        fs.writeFileSync(__dirname + "/../public/docs/doc2.docx", bufferedDoc);
     }
 
     createStudentRow(student) {

@@ -17,8 +17,8 @@ router.post('/docx', async ( req, res ) => {
 
 router.get('/download', async ( req, res ) => {
 
-    const educationsFile = __dirname + '\\..\\public\\docs\\doc.docx';
-    const studentsFile = __dirname + '\\..\\public\\docs\\doc2.docx';
+    const educationsFile = __dirname + '/../public/docs/doc.docx';
+    const studentsFile = __dirname + '/../public/docs/doc2.docx';
 
     console.log("Download: " + educationsFile);
 

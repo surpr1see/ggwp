@@ -1,7 +1,4 @@
 class ApiModel {
-    static host = 'localhost';
-    static port = '5000';
-    static protocol = 'https://';
 
     modelBaseUrl;
     modelRequest;
@@ -21,7 +18,7 @@ class ApiModel {
     }
 
     _buildUrl() {
-        return `${ApiModel.protocol}${ApiModel.host}:${ApiModel.port}${this.modelRequest}`;
+        return `/api${this.modelRequest}`;
     }
 
     _buildUrlWithParams(params, insertSlash) {

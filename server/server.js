@@ -30,13 +30,13 @@ const yearRouter = require('./routes/years.js');
 const gradeRouter = require('./routes/grades.js');
 const docxRouter = require('./routes/docx.js');
 
-app.use(studentRouter);
-app.use(educationRouter);
-app.use(yearRouter);
-app.use(gradeRouter);
-app.use(docxRouter);
+app.use('/api', studentRouter);
+app.use('/api', educationRouter);
+app.use('/api', yearRouter);
+app.use('/api', gradeRouter);
+app.use('/api', docxRouter);
 
-if(process.env.NODE_ENV === 'production') {
+if(true) {
     app.use(express.static(__dirname + '/public'));
     app.get(/.*/, (req, res) => {
         res.sendFile(__dirname + '/public/index.html');

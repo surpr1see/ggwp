@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const zip = require('express-zip');
+const path = require('path');
 
 const { Docx } = require('./../services/docx.js');
 
@@ -17,8 +18,8 @@ router.post('/docx', async ( req, res ) => {
 
 router.get('/download', async ( req, res ) => {
 
-    const educationsFile = __dirname + '/../public/docs/doc.docx';
-    const studentsFile = __dirname + '/../public/docs/doc2.docx';
+    const educationsFile = path.join(__dirname, '/../public/docs/doc.docx');
+    const studentsFile = path.join(__dirname, '/../public/docs/doc2.docx');
 
     console.log("Download: " + educationsFile);
 

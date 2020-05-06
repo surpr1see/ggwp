@@ -1,5 +1,6 @@
 const { Document, Table, TableCell, TableRow, VerticalAlign, Paragraph, Packer, AlignmentType, HeadingLevel } = require('docx');
 const fs = require('fs');
+const path = require('path');
 
 const { Education } = require('./../services/education.js');
 const { Student } = require('./../services/student.js');
@@ -155,7 +156,7 @@ class Docx {
         });
 
         const bufferedDoc = await Packer.toBuffer(doc);
-        fs.writeFileSync(__dirname + "/../public/docs/doc.docx", bufferedDoc);
+        fs.writeFileSync(path.join(__dirname, '/../public/docs/doc.docx'), bufferedDoc);
 
         console.log(educationsToDoc);
     }
@@ -393,7 +394,7 @@ class Docx {
         });
 
         const bufferedDoc = await Packer.toBuffer(doc);
-        fs.writeFileSync(__dirname + "/../public/docs/doc2.docx", bufferedDoc);
+        fs.writeFileSync(path.join(__dirname, '/../public/docs/doc2.docx'), bufferedDoc);
     }
 
     createStudentRow(student) {

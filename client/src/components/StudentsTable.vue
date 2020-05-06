@@ -12,7 +12,7 @@
 
         <b-table
             hover
-            :items="students"
+            :items="formattedStudents"
             :fields="fields"
             bordered
             class="regular-text"
@@ -108,6 +108,16 @@ export default {
             }
 
             return fields;
+        },
+        formattedStudents() {
+            return this.students.map(stud => {
+                const studCopy = Object.assign({}, stud);
+                studCopy.isNotEmployed = studCopy.isNotEmployed === true ? '+' : '';
+                studCopy.isFullTime = studCopy.isFullTime === true ? '+' : '';
+                studCopy.isUnavailableToEmploy = studCopy.isUnavailableToEmploy === true ? '+' : '';
+                studCopy.isBusinessStarted = studCopy.isBusinessStarted === true ? '+' : ''; 
+                return studCopy;
+            });
         }
     }
 }

@@ -40,7 +40,7 @@
 
                             <b-button
                                 variant="danger"
-                                v-b-modal.deleting-student-confirmation
+                                v-b-modal.deleting-education-confirmation
                                 class="col mt-4 mr-2"
                                 :disabled="!!!selectedEducation._id || isLoading"
                             >

@@ -6,83 +6,82 @@
         <div
             class="d-flex flex-column"
         >
-            <label>
-                По ФИО:
-            </label>
-            <b-input
-                type="text"
-                placeholder="Введите ФИО"
-                v-model="name"
-                class="mb-3"
-                @input="filter"
-            ></b-input>
+            <b-button v-b-toggle.collapse-3 class="m-1">По ФИО/ Номеру Телефона</b-button>
+            <b-collapse id="collapse-3">
+                <b-input
+                    type="text"
+                    placeholder="Введите ФИО"
+                    v-model="name"
+                    class="mb-3"
+                    @input="filter"
+                ></b-input>
 
-            <label>
-                По номеру телефона:
-            </label>
-            <b-input
-                type="number"
-                placeholder="Введите номер телефона"
-                v-model="phone"
-                class="mb-3"
-                @input="filter"
-            ></b-input>
+                <b-input
+                    type="number"
+                    placeholder="Введите номер телефона"
+                    v-model="phone"
+                    class="mb-3"
+                    @input="filter"
+                ></b-input>
+            </b-collapse>
 
-            <label>
-                По e-mail:
-            </label>
-            <b-input
-                type="text"
-                placeholder="Введите E-mail"
-                v-model="socialProfile"
-                class="mb-3"
-                @input="filter"
-            ></b-input>
+            <b-button v-b-toggle.collapse-4 class="m-1">По E-mail</b-button>
+            <b-collapse id="collapse-4">
+                <b-input
+                    type="text"
+                    placeholder="Введите E-mail"
+                    v-model="socialProfile"
+                    class="mb-3"
+                    @input="filter"
+                ></b-input>
+            </b-collapse>
 
-            <label>
-                По занимаемой должности:
-            </label>
-            <b-input
-                type="text"
-                placeholder="Введите название должности"
-                v-model="position"
-                class="mb-3"
-                @input="filter"
-            ></b-input>
+            <b-button v-b-toggle.collapse-5 class="m-1">По рабочим данным</b-button>
+            <b-collapse id="collapse-5">
+                <label>
+                    По занимаемой должности:
+                </label>
+                <b-input
+                    type="text"
+                    placeholder="Введите название должности"
+                    v-model="position"
+                    class="mb-3"
+                    @input="filter"
+                ></b-input>
 
-            <label>
-                По названию компании:
-            </label>
-            <b-input
-                type="text"
-                placeholder="Введите название компании"
-                v-model="companyTitle"
-                class="mb-3"
-                @input="filter"
-            >
-            </b-input>
+                <label>
+                    По названию компании:
+                </label>
+                <b-input
+                    type="text"
+                    placeholder="Введите название компании"
+                    v-model="companyTitle"
+                    class="mb-3"
+                    @input="filter"
+                >
+                </b-input>
+                <label>
+                    По сфере деятельности:
+                </label>
+                <b-input
+                    type="text"
+                    placeholder="Введите сферу деятельности"
+                    v-model="activityField"
+                    class="mb-3"
+                    @input="filter"
+                ></b-input>
+            </b-collapse>
 
-            <label>
-                По региону проживания:
-            </label>
-            <b-input
-                type="text"
-                placeholder="Введите регион"
-                v-model="region"
-                class="mb-3"
-                @input="filter"
-            ></b-input>
-
-            <label>
-                По сфере деятельности:
-            </label>
-            <b-input
-                type="text"
-                placeholder="Введите сферу деятельности"
-                v-model="activityField"
-                class="mb-3"
-                @input="filter"
-            ></b-input>
+            <b-button v-b-toggle.collapse-6 class="m-1">По региону проживания</b-button>
+            <b-collapse id="collapse-6">
+                <b-input
+                    type="text"
+                    placeholder="Введите регион"
+                    v-model="region"
+                    class="mb-3"
+                    @input="filter"
+                ></b-input>
+            </b-collapse>
 
             <b-form-checkbox
                 value="true"
@@ -124,16 +123,16 @@
                 Начали свой бизнес
             </b-form-checkbox>
 
-            <label>
-                По достижениям:
-            </label>
-            <b-input
-                type="text"
-                placeholder="Введите текст достижений"
-                v-model="achievements"
-                class="mb-3"
-                @input="filter"
-            ></b-input>
+            <b-button v-b-toggle.collapse-7 class="m-1">По достижениям</b-button>
+            <b-collapse id="collapse-7">
+                <b-input
+                    type="text"
+                    placeholder="Введите текст достижений"
+                    v-model="achievements"
+                    class="mb-3"
+                    @input="filter"
+                ></b-input>
+            </b-collapse>
         </div>
     </div>
 </template>

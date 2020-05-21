@@ -15,7 +15,7 @@
             id="edit-student-form-model"
             title="Редактировать студента"
             @ok="updateStudent"
-            :cancel-title="Отмена"
+            :cancelTitle="Отмена"
         >
             <label>
                 Полное имя:

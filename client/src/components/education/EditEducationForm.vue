@@ -15,7 +15,7 @@
             id="education-form-model"
             title="Редактировать выпуск"
             @ok="editEducation"
-            :cancel-title="Отмена"
+            :cancelTitle="Отмена"
         >
             <label>
                 Название программы обучения:

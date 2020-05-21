@@ -14,7 +14,7 @@
             id="form-model"
             title="Добавить студента"
             @ok="addStudent"
-            :cancel-title="Отмена"
+            :cancelTitle="Отмена"
         >
             <label>
                 Полное имя:

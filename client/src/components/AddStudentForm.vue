@@ -178,7 +178,8 @@ export default {
     name: "AddStudentForm",
     props: {
         educations: Array,
-        refreshStudents: Function
+        refreshStudents: Function,
+        selectedEducation: Object
     },
     data() {
         return {
@@ -198,6 +199,13 @@ export default {
             informationSource: null,
             
             education: null
+        }
+    },
+    watch: {
+        selectedEducation: function(newSelectedEducation) {
+            if(newSelectedEducation) {
+                this.education = newSelectedEducation._id;
+            }
         }
     },
     computed: {

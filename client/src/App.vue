@@ -96,6 +96,7 @@
 
                         <AddStudentForm
                             :educations="educations"
+                            :selectedEducation="selectedEducation"
                             :refreshStudents="refreshData"/>
 
                         <b-row>

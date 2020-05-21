@@ -12,11 +12,11 @@ const educationSchema = mongoose.Schema({
 
     totalAmountOfGraduates: {
         type: Number,
-        required: true
+        required: false
     },
     amountOfGraduatesParticipated: {
         type: Number,
-        required: true
+        required: false
     },
 
     amountOfEmployed: {

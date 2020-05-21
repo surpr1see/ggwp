@@ -13,8 +13,9 @@
 
         <b-modal
             id="edit-student-form-model"
-            title="Edit Student"
+            title="Редактировать студента"
             @ok="updateStudent"
+            :cancel-title="Отмена"
         >
             <label>
                 Полное имя:

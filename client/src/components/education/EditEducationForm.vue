@@ -13,8 +13,9 @@
 
         <b-modal
             id="education-form-model"
-            title="Add Education"
+            title="Редактировать выпуск"
             @ok="editEducation"
+            :cancel-title="Отмена"
         >
             <label>
                 Название программы обучения:

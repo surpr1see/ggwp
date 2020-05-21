@@ -1,5 +1,11 @@
 <template>
     <div id="app">
+        <b-alert
+            v-if="selectedEducation._id"
+            show
+        >
+            Выбранный выпуск: {{ selectedEducation.educationProgramTitle }}. {{ selectedEducation.yearValue }}
+        </b-alert>
         <b-tabs
             class="h-100"
         >
@@ -14,12 +20,6 @@
                         sm="2"
                         class="border-right h-100 pl-4"
                     >
-                        <b-alert
-                            v-if="selectedEducation._id"
-                            show
-                        >
-                            Выбранный выпуск: {{ selectedEducation.educationProgramTitle }}
-                        </b-alert>
                         <b-button
                             variant="primary"
                             @click="generateDocx"

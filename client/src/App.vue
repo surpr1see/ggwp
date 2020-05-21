@@ -145,7 +145,7 @@
                         id="deleting-student-confirmation"
                         title="Удаление студента"
                         @ok="deleteSelectedStudent"
-                        :cancelTitle="Отмена"
+                        :cancelTitleHtml="'Отмена'"
                     >
                         Вы действительно хотите удалить этого студента?
                     </b-modal>
@@ -154,7 +154,7 @@
                         id="deleting-education-confirmation"
                         title="Удаление выпуска"
                         @ok="deleteSelectedEducation"
-                        :cancelTitle="Отмена"
+                        :cancelTitleHtml="'Отмена'"
                     >
                         Вы действительно хотите удалить этот выпуск?
                     </b-modal>
